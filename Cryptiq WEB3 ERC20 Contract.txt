@@ -1,34 +1,17 @@
-//          _____                    _____                _____                    _____                _____                    _____                   _______       
-//         /\    \                  /\    \              |\    \                  /\    \              /\    \                  /\    \                 /::\    \ 
-//        /::\    \                /::\    \             |:\____\                /::\    \            /::\    \                /::\    \               /::::\    \ 
-//       /::::\    \              /::::\    \            |::|   |               /::::\    \           \:::\    \               \:::\    \             /::::::\    \ 
-//      /::::::\    \            /::::::\    \           |::|   |              /::::::\    \           \:::\    \               \:::\    \           /::::::::\    \ 
-//     /:::/\:::\    \          /:::/\:::\    \          |::|   |             /:::/\:::\    \           \:::\    \               \:::\    \         /:::/~~\:::\    \
-//    /:::/  \:::\    \        /:::/__\:::\    \         |::|   |            /:::/__\:::\    \           \:::\    \               \:::\    \       /:::/    \:::\    \ 
-//   /:::/    \:::\    \      /::::\   \:::\    \        |::|   |           /::::\   \:::\    \          /::::\    \              /::::\    \     /:::/    / \:::\    \
-//  /:::/    / \:::\    \    /::::::\   \:::\    \       |::|___|______    /::::::\   \:::\    \        /::::::\    \    ____    /::::::\    \   /:::/____/   \:::\____\ 
-// /:::/    /   \:::\    \  /:::/\:::\   \:::\____\      /::::::::\    \  /:::/\:::\   \:::\____\      /:::/\:::\    \  /\   \  /:::/\:::\    \ |:::|    |     |:::|    |
-///:::/____/     \:::\____\/:::/  \:::\   \:::|    |    /::::::::::\____\/:::/  \:::\   \:::|    |    /:::/  \:::\____\/::\   \/:::/  \:::\____\|:::|____|     |:::|____|
-//\:::\    \      \::/    /\::/   |::::\  /:::|____|   /:::/~~~~/~~      \::/    \:::\  /:::|____|   /:::/    \::/    /\:::\  /:::/    \::/    / \:::\   _\___/:::/    / 
-// \:::\    \      \/____/  \/____|:::::\/:::/    /   /:::/    /          \/_____/\:::\/:::/    /   /:::/    / \/____/  \:::\/:::/    / \/____/   \:::\ |::| /:::/    /  
-//  \:::\    \                    |:::::::::/    /   /:::/    /                    \::::::/    /   /:::/    /            \::::::/    /             \:::\|::|/:::/    /   
-//   \:::\    \                   |::|\::::/    /   /:::/    /                      \::::/    /   /:::/    /              \::::/____/               \::::::::::/    /    
-//    \:::\    \                  |::| \::/____/    \::/    /                        \::/____/    \::/    /                \:::\    \                \::::::::/    /     
-//     \:::\    \                 |::|  ~|           \/____/                          ~~           \/____/                  \:::\    \                \::::::/    /      
-//      \:::\    \                |::|   |                                                                                   \:::\    \                \::::/____/       
-//       \:::\____\               \::|   |                                                                                    \:::\____\                |::|    |        
-//        \::/    /                \:|   |                                                                                     \::/    /                |::|____|        
-//         \/____/                  \|___|                                                                                      \/____/                  ~~              
-//                                                                                                                                                                    
-                                                                                                                                                                       
-                                                                                                                                                                       
+
+
+//
+//   ██████╗██████╗ ██╗   ██╗██████╗ ████████╗██╗ ██████╗     ██╗    ██╗███████╗██████╗ ██████╗ 
+//  ██╔════╝██╔══██╗╚██╗ ██╔╝██╔══██╗╚══██╔══╝██║██╔═══██╗    ██║    ██║██╔════╝██╔══██╗╚════██╗
+//  ██║     ██████╔╝ ╚████╔╝ ██████╔╝   ██║   ██║██║   ██║    ██║ █╗ ██║█████╗  ██████╔╝ █████╔╝
+//  ██║     ██╔══██╗  ╚██╔╝  ██╔═══╝    ██║   ██║██║▄▄ ██║    ██║███╗██║██╔══╝  ██╔══██╗ ╚═══██╗
+//  ╚██████╗██║  ██║   ██║   ██║        ██║   ██║╚██████╔╝    ╚███╔███╔╝███████╗██████╔╝██████╔╝
+//   ╚═════╝╚═╝  ╚═╝   ╚═╝   ╚═╝        ╚═╝   ╚═╝ ╚══▀▀═╝      ╚══╝╚══╝ ╚══════╝╚═════╝ ╚═════╝ 
 
 
 
 
 // SPDX-License-Identifier: UNLICENSED
-// File: @openzeppelin/contracts/token/ERC20/IERC20.sol
-
 
 // OpenZeppelin Contracts (last updated v4.6.0) (token/ERC20/IERC20.sol)
 
@@ -660,39 +643,73 @@ interface IRouter {
         address to,
         uint deadline
     ) external payable;
+    function addLiquidityETH(
+        address token,
+        uint amountTokenDesired,
+        uint amountTokenMin,
+        uint amountETHMin,
+        address to,
+        uint deadline
+    ) external payable returns (uint amountToken, uint amountETH, uint liquidity);
 }
 
 interface IFactory {
     function createPair(address tokenA, address tokenB) external returns (address pair);
     function getPair(address tokenA, address tokenB) external view returns (address pair);
+    function treasury() external view returns (address treasury);
 }
 
-contract cryptiq is Ownable, ERC20('cryptiq Token', 'CRYPTQ') {
+contract CryptiQWEB3 is Ownable, ERC20 ("CryptiQ WEB3 Ecosystem", "CryptiQ") {
        
     IRouter public Router;
+    IRouter public BurnRouter;
     
     uint256 public devFee;
+    uint256 public marketingFee;
+    uint256 public liqFee;
     uint256 public burnFee;
-    uint256 public NFTFee;
-    address public burnToken;
+    uint256 public totalFee;
     uint256 public swapAtAmount;
+
+    address public burnToken;
+    address payable public devWallet;
     address payable public  marketingWallet;
-    address payable public NFTWallet;
     address public swapPair;
     address dead = 0x000000000000000000000000000000000000dEaD;
+
+
+    bool isSelfBurn;
     mapping (address => bool) public automatedMarketMakerPairs;
     mapping (address => bool) private _isExcludedFromFees;
     
-    constructor(address _router, address _MarketingWallet, address _NFTWallet, uint256 initialSupply, address realOwner)  {
-       devFee = 200;  // 200 = 2%
-       burnFee = 0; // 100 = 1%
-       NFTFee = 200;  // 200 = 2%
-       burnToken = address(0);
-       marketingWallet = payable(_MarketingWallet);
-       NFTWallet = payable(_NFTWallet);
+    
+    constructor(
+        uint256 _devFee,
+        uint256 _marketingFee,
+        uint256 _burnFee,
+        uint256 _liqFee,
+        address _router,
+        address _devWallet,
+        address _MarketingWallet, 
+        address _burnToken, 
+        address _burnRouter, 
+        uint256 initialSupply, 
+        address realOwner
+        )  {
+
+        devWallet = payable(_devWallet);
+        marketingWallet = payable(_MarketingWallet);
+        setBurnToken(_burnToken);
+        BurnRouter = IRouter(_burnRouter);
+
+        setDevFee(_devFee);
+        setMarketingFee(_marketingFee);
+        setBurnFee(_burnFee);
+        setLiquidityFee(_liqFee);
+       
+       
        excludeFromFees(realOwner, true);
        excludeFromFees(address(this), true);
-       excludeFromFees(0x3bcf80bF240E3855A8040e4315334e9c24398a3c, true);
        _mint(realOwner, initialSupply * (10**18));
        swapAtAmount = totalSupply() * 10 / 1000000;  // .01% 
        updateSwapRouter(_router);
@@ -701,22 +718,27 @@ contract cryptiq is Ownable, ERC20('cryptiq Token', 'CRYPTQ') {
    
      event ExcludeFromFees(address indexed account, bool isExcluded);
      event SetAutomatedMarketMakerPair(address indexed pair, bool indexed value);
-    
+
     function setDevFee(uint256 _newDevFee) public onlyOwner {
-      require(_newDevFee <= 1000, "Cannot exceed 1000");
       devFee = _newDevFee;
-    }
-    
-    function setBurnFee(uint256 _newBurnFee) public onlyOwner {
-      require(_newBurnFee <= 1000, "Cannot exceed 1000");
-      burnFee = _newBurnFee;
+      totalFee = devFee + burnFee + liqFee + marketingFee;
+      if(devFee > 0) require(devWallet != address(0),"Set Dev Wallet First");
+      require(totalFee <= 2000, "TotalFee cannot exceed 2000");
     }
 
-    function setNFTFee(uint256 _newNFTFee) public onlyOwner {
-      require(_newNFTFee <= 1000, "Cannot exceed 1000");
-      NFTFee = _newNFTFee;
+    function setMarketingFee(uint256 _newMarketingFee) public onlyOwner {
+      marketingFee = _newMarketingFee;
+      totalFee = devFee + burnFee + liqFee + marketingFee;
+      if(marketingFee >0) require(marketingWallet != address(0),"Set Marketing Wallet First");
+      require(totalFee <= 2000, "TotalFee cannot exceed 2000");
     }
     
+    function setLiquidityFee(uint256 _newLiqFee) public onlyOwner {
+      liqFee = _newLiqFee;
+      totalFee = devFee + burnFee + liqFee + marketingFee;
+      require(totalFee <= 2000, "TotalFee cannot exceed 2000");
+    }
+
     function setMarketingWallet(address payable newMarketingWallet) public onlyOwner {
          if (_isExcludedFromFees[marketingWallet] = true)
             excludeFromFees(marketingWallet, false);
@@ -726,9 +748,32 @@ contract cryptiq is Ownable, ERC20('cryptiq Token', 'CRYPTQ') {
          if (_isExcludedFromFees[marketingWallet] = false)
             excludeFromFees(marketingWallet, true);
     }
+     function setDevWallet(address payable newDevWallet) public onlyOwner {
+         if (_isExcludedFromFees[devWallet] = true)
+            excludeFromFees(devWallet, false);
 
-    function setBurnToken(address _newBurnToken) external onlyOwner {
+        devWallet = newDevWallet;
+
+         if (_isExcludedFromFees[devWallet] = false)
+            excludeFromFees(devWallet, true);
+    }
+
+    function setBurnToken(address _newBurnToken) public onlyOwner {
         burnToken = _newBurnToken;
+        if(_newBurnToken == address(this)) isSelfBurn = true;
+        else isSelfBurn = false;
+    }
+    function setBurnFee(uint256 _newBurnFee) public onlyOwner {
+      burnFee = _newBurnFee;
+      totalFee = devFee + burnFee + liqFee + marketingFee;
+      require(totalFee <= 2000, "TotalFee cannot exceed 2000");
+      if(burnFee > 0 ){
+        require(burnToken != address(0), "BurnToken not Set");
+        if(!isSelfBurn) require(BurnRouter != IRouter(address(0)), "Burn Router not Set");
+      }
+    }
+    function setBurnRouter(address _newBurnRouter) external onlyOwner {
+        BurnRouter = IRouter(_newBurnRouter); 
     }
     
     function excludeFromFees(address account, bool excluded) public onlyOwner {
@@ -757,7 +802,7 @@ contract cryptiq is Ownable, ERC20('cryptiq Token', 'CRYPTQ') {
             _setAutomatedMarketMakerPair(bnbPair, true);
         }
           _approve(address(this), address(Router), ~uint256(0));
-        
+            
         swapPair = bnbPair;
     }
     
@@ -781,91 +826,94 @@ contract cryptiq is Ownable, ERC20('cryptiq Token', 'CRYPTQ') {
         address to,
         uint256 amount
     ) internal override {
-           
+          
         // if any account belongs to _isExcludedFromFee account then remove the fee
         if(!_isExcludedFromFees[from] && !_isExcludedFromFees[to]) {
-
             if(automatedMarketMakerPairs[to] || automatedMarketMakerPairs[from]) {
-                uint256 extraFee;
-                if(devFee >0 || burnFee >0 || NFTFee >0) extraFee =(amount * devFee)/10000 + (amount * burnFee)/10000 + (amount * NFTFee)/10000;
-                
-
-                if (balanceOf(address(this)) > swapAtAmount && !inSwapAndLiquify && automatedMarketMakerPairs[to]) SwapFees();
-                
-                if (extraFee > 0) {
-                  super._transfer(from, address(this), extraFee);
-                  amount = amount - extraFee;
-                }
-                
+                if(totalFee > 0) {
+                    uint256 extraFee =(amount * totalFee)/10000;
+                    if (balanceOf(address(this)) > swapAtAmount && !inSwapAndLiquify && automatedMarketMakerPairs[to]) SwapFees();
+                    if (extraFee > 0) {
+                        super._transfer(from, address(this), extraFee);
+                        amount = amount - extraFee;
+                    }
+                } 
             }     
         }
-      super._transfer(from, to, amount);
-        
+      super._transfer(from, to, amount);     
    }
 
     function SwapFees() private lockTheSwap {
-   
-      address[] memory path = new address[](2);
+        uint256 tokensToAddLiquidityWith = 0;
+        uint256 contractTokenBalance = balanceOf(address(this));
+        if(liqFee > 0) tokensToAddLiquidityWith = (contractTokenBalance / (totalFee *2)) * liqFee;
+        if(isSelfBurn && burnFee > 0){
+            uint256 toSelfBurn = contractTokenBalance * burnFee / totalFee;
+            super._transfer(address(this), dead, toSelfBurn);
+            contractTokenBalance = balanceOf(address(this));
+        }
+        
+        uint256 toSwap = contractTokenBalance-tokensToAddLiquidityWith;
+      
+        uint256 initialBalance = address(this).balance;
+
+        address[] memory path = new address[](2);
         path[0] = address(this);
         path[1] = Router.WETH();
 
-        Router.swapExactTokensForETHSupportingFeeOnTransferTokens(
-            balanceOf(address(this)),
+        try Router.swapExactTokensForETHSupportingFeeOnTransferTokens(
+            toSwap,
             0,
             path,
             address(this),
             block.timestamp
-        );
+        ) {} catch { revert("Failed to swap to eth");}
 
-        if(burnFee > 0) {
-            uint256 burnAmount = address(this).balance * burnFee / (burnFee + devFee + NFTFee);
+        if(!isSelfBurn && burnFee > 0) {
+            uint256 burnAmount = address(this).balance * burnFee / totalFee;
             address[] memory path1 = new address[](2);
-            path1[0] = Router.WETH();
+            path1[0] = BurnRouter.WETH();
             path1[1] = burnToken;
-            Router.swapExactETHForTokensSupportingFeeOnTransferTokens{value: burnAmount} (
+            try BurnRouter.swapExactETHForTokensSupportingFeeOnTransferTokens{value: burnAmount} (
                 0,
                 path1,
                 dead,
                 block.timestamp
-            );         
+            ) {} catch { revert("Failed to swap for BurnToken"); }         
         }
 
-        uint256 NFTAmount = address(this).balance * NFTFee / ( devFee + NFTFee );
-        payable(NFTWallet).transfer(NFTAmount);
-        payable(marketingWallet).transfer(address(this).balance);
+        if(liqFee > 0) {
+            uint256 deltaBalance = address(this).balance-initialBalance;
+            uint256 bnbToAddLiquidityWith = (deltaBalance * liqFee) / (((totalFee - burnFee) *2) - liqFee);
+            addLiquidity(tokensToAddLiquidityWith, bnbToAddLiquidityWith);
+        }
+
+        
+
+        if(marketingFee > 0) {
+            uint256 toMarketing = address(this).balance * marketingFee / (devFee + marketingFee);
+            payable(marketingWallet).transfer(toMarketing);
+        }
+        if(devFee > 0) payable(devWallet).transfer(address(this).balance);
                     
     }
 
-        function manualSwapAndBurn() external onlyOwner {
-            address[] memory path = new address[](2);
-            path[0] = address(this);
-            path[1] = Router.WETH();
+    function manualSwapAndBurn() external onlyOwner {
+       SwapFees();
+    }
 
-                Router.swapExactTokensForETHSupportingFeeOnTransferTokens(
-                    balanceOf(address(this)),
-                    0,
-                    path,
-                    address(this),
-                    block.timestamp
-                );
-
-            if(burnFee > 0) {
-            uint256 burnAmount = address(this).balance * burnFee / (burnFee + devFee + NFTFee);
-            address[] memory path1 = new address[](2);
-            path1[0] = Router.WETH();
-            path1[1] = burnToken;
-                Router.swapExactETHForTokensSupportingFeeOnTransferTokens{value: burnAmount} (
-                    0,
-                    path1,
-                    dead,
-                    block.timestamp
-                );
-            }      
-
-            uint256 NFTAmount = address(this).balance * NFTFee / ( devFee + NFTFee );
-            payable(NFTWallet).transfer(NFTAmount);
-            payable(marketingWallet).transfer(address(this).balance);
-        }
+    function addLiquidity(uint256 tokenAmount, uint256 ethAmount) private {
+        // add the liquidity
+        try Router.addLiquidityETH{value: ethAmount}(
+            address(this),
+            tokenAmount,
+            0, // slippage is unavoidable
+            0, // slippage is unavoidable
+            dead,
+            block.timestamp
+        ) {} catch {revert("Failed to add liquidity");}
+        
+    }
 
         function withdawlBNB() external onlyOwner {
             payable(msg.sender).transfer(address(this).balance);
@@ -880,3 +928,4 @@ contract cryptiq is Ownable, ERC20('cryptiq Token', 'CRYPTQ') {
     receive() external payable {}
     
 }
+
